@@ -5,6 +5,8 @@ filter <- "select * from file where Date='1/2/2007' or Date='2/2/2007'"
 data <- read.csv2.sql(file, filter)
 data$DateTime <- strptime(paste(data$Date,data$Time),"%d/%m/%Y %H:%M:%S")
 
+png("plot4.png", width=480, height=480)
+
 par(mfrow = c(2, 2))
 
 with(data, plot(DateTime, Global_active_power, pch=".", 
@@ -21,7 +23,7 @@ with(data, lines(DateTime, Sub_metering_1))
 with(data, lines(DateTime, Sub_metering_2, col="red"))
 with(data, lines(DateTime, Sub_metering_3, col="blue"))
 legend("topright",
-       box.lwd=0,
+       bty="n",
        lty=c(1,1,1), 
        cex=0.5,
        col=c("black","red","blue"),
@@ -31,5 +33,4 @@ with(data, plot(DateTime, Global_reactive_power, pch=".",
                 xlab="datetime"))
 with(data, lines(DateTime,Global_reactive_power))
 
-dev.copy(png, file='plot4.png')
 dev.off()
